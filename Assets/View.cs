@@ -12,7 +12,7 @@ public class View : MonoBehaviour
 
     public GameObject vertexPrefab;
     public GameObject edgePrefab;
-    public GameObject buildingColliderPrefab;
+    public GameObject selectionSurfacePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -55,10 +55,17 @@ public class View : MonoBehaviour
         List<int []> triangles = graph.getTriangles();
 
         foreach (int[] triangle in triangles) {
-            GameObject newTriangleColliderGo = makeSelectionTriangles(
+            GameObject obj = (GameObject) Instantiate(selectionSurfacePrefab, new Vector3() , Quaternion.identity);
+            TriangleSelection selectionSurface = obj.GetComponent<TriangleSelection>();
+            selectionSurface.setTriangleCoordinates(
+                triangle,
                 triangle.Select((triangleVertexID) => graph.vertices[triangleVertexID].pos).ToArray()
             );
-            newTriangleColliderGo.transform.SetParent(this.transform);
+
+            // GameObject newTriangleColliderGo = makeSelectionTriangles(
+            //     triangle.Select((triangleVertexID) => graph.vertices[triangleVertexID].pos).ToArray()
+            // );
+            obj.transform.SetParent(this.transform);
         }
     }
 
@@ -67,15 +74,16 @@ public class View : MonoBehaviour
         GameObject newGameObject = new GameObject();
 
         MeshRenderer meshRenderer = newGameObject.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
-
+        meshRenderer.sharedMaterial = new Material(Shader.Find("Selectii"));
         MeshFilter meshFilter = newGameObject.AddComponent<MeshFilter>();
-
         Mesh mesh = new Mesh();
         mesh.vertices = triangleCorners;
         // two triangles with oposing normals
         mesh.triangles = new int[] { 0,1,2,2,1,0 };
         meshFilter.mesh = mesh;
+        
+        // add interaction behavior (highlighting on hover etc)
+        newGameObject.AddComponent<TriangleSelection>();
         return newGameObject;
     }
  
