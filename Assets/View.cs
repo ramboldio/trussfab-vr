@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class View : MonoBehaviour
 {
@@ -44,43 +46,38 @@ public class View : MonoBehaviour
             drawVertex(graph.vertices[i].pos);
         }
 
-        this.drawCollisionBody();
+        this.drawSelectionTriangles();
         currentlyActiveGraph = graph;
     }
 
-    void drawCollisionBody() {
-        // find triangles
+    void drawSelectionTriangles() {
         Graph graph = model.getGraph();
         List<int []> triangles = graph.getTriangles();
 
-        MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
-
-        MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
-
-        Mesh mesh = new Mesh();
-
-        Vector3[] vertices = new Vector3[graph.vertices.Length];
-        for (int i = 0; i < graph.vertices.Length; i++) {
-            vertices[i] = graph.vertices[i].pos;
+        foreach (int[] triangle in triangles) {
+            GameObject newTriangleColliderGo = makeSelectionTriangles(
+                triangle.Select((triangleVertexID) => graph.vertices[triangleVertexID].pos).ToArray()
+            );
+            newTriangleColliderGo.transform.SetParent(this.transform);
         }
-        mesh.vertices = vertices;
-
-        int[] tris = new int[3*triangles.Count];
-        for (int i = 0; i < triangles.Count; i++){
-            tris[i*3 + 0] = triangles[i][0];
-            tris[i*3 + 1] = triangles[i][1];
-            tris[i*3 + 2] = triangles[i][2];
-        }
-        mesh.triangles = tris;
-
-        meshFilter.mesh = mesh;
     }
 
-    // void drawSelectionTriangles(Vector3[] triangleCorners) {
-    //     gameObject = new GameObject();
-    //     Instantiate(gameObject, transform.position, Quaternion.identity);
-    // }
+    static GameObject makeSelectionTriangles(Vector3[] triangleCorners) {
+        Assert.AreEqual(triangleCorners.Length, 3);
+        GameObject newGameObject = new GameObject();
+
+        MeshRenderer meshRenderer = newGameObject.AddComponent<MeshRenderer>();
+        meshRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
+
+        MeshFilter meshFilter = newGameObject.AddComponent<MeshFilter>();
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = triangleCorners;
+        // two triangles with oposing normals
+        mesh.triangles = new int[] { 0,1,2,2,1,0 };
+        meshFilter.mesh = mesh;
+        return newGameObject;
+    }
  
     void drawVertex(Vector3 pos) {
         GameObject obj = (GameObject) Instantiate(vertexPrefab, pos, Quaternion.identity);
