@@ -6,37 +6,23 @@ using UnityEngine.Assertions;
 
 public class View : MonoBehaviour
 {
-
     private Model model;
-    private Graph currentlyActiveGraph;
 
+    public GameObject model_GO;
     public GameObject vertexPrefab;
     public GameObject edgePrefab;
     public GameObject selectionSurfacePrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
-        model = GameObject.Find("Model").GetComponent<Model>(); 
+        model = model_GO.GetComponent<Model>(); 
         updateTrussStructure();
+        model.modelUpdate.AddListener(updateTrussStructure);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // updateTrussStructure();
-    }
-
-
-    void updateTrussStructure () {
+    void updateTrussStructure() {
         Graph graph = model.getGraph();
-
-       // if (currentlyActiveGraph.Equals(graph)) {
-       //  // already up-to-date
-       //  return;
-       // }
-       
-       clearAllChildren();
+        clearAllChildren();
 
         for (int i = 0; i < graph.edges.Length; i++) {
             drawTruss(graph.vertices[graph.edges[i].v_src].pos, graph.vertices[graph.edges[i].v_dest].pos);
@@ -46,12 +32,10 @@ public class View : MonoBehaviour
             drawVertex(graph.vertices[i].pos);
         }
 
-        this.drawSelectionTriangles();
-        currentlyActiveGraph = graph;
+        this.drawSelectionTriangles(graph);
     }
 
-    void drawSelectionTriangles() {
-        Graph graph = model.getGraph();
+    void drawSelectionTriangles(Graph graph) {
         List<int []> triangles = graph.getTriangles();
 
         foreach (int[] triangle in triangles) {
@@ -62,29 +46,8 @@ public class View : MonoBehaviour
                 triangle.Select((triangleVertexID) => graph.vertices[triangleVertexID].pos).ToArray()
             );
 
-            // GameObject newTriangleColliderGo = makeSelectionTriangles(
-            //     triangle.Select((triangleVertexID) => graph.vertices[triangleVertexID].pos).ToArray()
-            // );
             obj.transform.SetParent(this.transform);
         }
-    }
-
-    static GameObject makeSelectionTriangles(Vector3[] triangleCorners) {
-        Assert.AreEqual(triangleCorners.Length, 3);
-        GameObject newGameObject = new GameObject();
-
-        MeshRenderer meshRenderer = newGameObject.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = new Material(Shader.Find("Selectii"));
-        MeshFilter meshFilter = newGameObject.AddComponent<MeshFilter>();
-        Mesh mesh = new Mesh();
-        mesh.vertices = triangleCorners;
-        // two triangles with oposing normals
-        mesh.triangles = new int[] { 0,1,2,2,1,0 };
-        meshFilter.mesh = mesh;
-        
-        // add interaction behavior (highlighting on hover etc)
-        newGameObject.AddComponent<TriangleSelection>();
-        return newGameObject;
     }
  
     void drawVertex(Vector3 pos) {

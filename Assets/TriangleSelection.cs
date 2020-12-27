@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
-public class TriangleSelection : MonoBehaviour
+
+public class TriangleSelection : EventTrigger
 {
-	public int[] linkedVertexIDs;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [System.Serializable]
+    public class AddGeometryEvent : UnityEvent<int[]> {}
+    public static AddGeometryEvent addGeometryEvent = new AddGeometryEvent();
+
+	public int[] linkedVertexIDs = null;
+    public MeshFilter meshFilter = null;
+    public MeshCollider meshCollider = null;
+
+    public override void OnPointerClick(PointerEventData data) {
+        addGeometryEvent.Invoke(this.linkedVertexIDs);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void setTriangleCoordinates(int[] vertexIDs, Vector3[] triangleCorners) {
         Assert.AreEqual(triangleCorners.Length, 3);
@@ -26,12 +29,11 @@ public class TriangleSelection : MonoBehaviour
         // TODO: check whether copying makes more sense here
 		linkedVertexIDs = vertexIDs;
 
-        MeshFilter meshFilter = this.GetComponent<MeshFilter>();
-
         Mesh mesh = new Mesh();
         mesh.vertices = triangleCorners;
         // two triangles with oposing normals
         mesh.triangles = new int[] { 0,1,2,2,1,0 };
-        meshFilter.mesh = mesh;
+        GetComponent<MeshFilter>().mesh = mesh;
+        // meshCollider.mesh = mesh;
     }
 }
