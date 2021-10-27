@@ -47,6 +47,10 @@ public class View : MonoBehaviour
             );
 
             obj.transform.SetParent(this.transform);
+            
+            // move obj to layer to be able to do a selective phyics raycast later e.g. in MouseSelector.cs
+            obj.layer = 8;
+
         }
     }
  

@@ -35,7 +35,7 @@ public struct Graph {
 		this.edges = edges;
 	}
 
-	public static Graph getTetrahedron() {
+	public static Graph InitTetrahedron() {
 		return new Graph (
     		 new Vertex[] {
     			new Vertex(0, new Vector3(0,0,0)),
@@ -84,11 +84,19 @@ public struct Graph {
 		return triangles;
 	}
 
-	public Vector3 getPosFromVertexID(int v_id) {
+	public Vector3 GetPosFromVertexID(int v_id) {
 		return this.vertices[v_id].pos;
 	}
 
-	public static Graph addGeometry(Graph g, int[] triangle) {
+	public static Graph MergeCloseNeighbours(Graph g) {
+		// TODO implement
+		// List<Vertex> vertecies = g.vertecies.Select(a => a).ToList<Vertex>();
+		// List<Edge> vertecies = g.vertecies.Select(a => a).ToList<Edges>();
+		return g;
+	}
+
+
+	public static Graph AddGeometry(Graph g, int[] triangle) {
 		// TODO ensure that triangle has 3 entries
 
 		// adds a new connected vertex to the structure that is placed outside the triangle by the specified distance 
@@ -97,21 +105,21 @@ public struct Graph {
 
 		Plane buildingPlane = new Plane();
 		buildingPlane.Set3Points(
-			g.getPosFromVertexID(triangle[0]),
-			g.getPosFromVertexID(triangle[1]),
-			g.getPosFromVertexID(triangle[2])
+			g.GetPosFromVertexID(triangle[0]),
+			g.GetPosFromVertexID(triangle[1]),
+			g.GetPosFromVertexID(triangle[2])
 		);
 		Vector3 normal = buildingPlane.normal;
 
 		// average over the corners
 		Vector3 centroid = 
-			triangle.Select(id => g.getPosFromVertexID(id)).Aggregate(new Vector3(), (acc, x) => acc + x) / triangle.Length;
+			triangle.Select(id => g.GetPosFromVertexID(id)).Aggregate(new Vector3(), (acc, x) => acc + x) / triangle.Length;
 
 		int newVertexId = g.vertices.Length;
 		Vertex newVertex = new Vertex(newVertexId, normal * distanceFromTriangle + centroid);
 
 		int newEdgeIdStart = g.edges.Length;
-		List<Edge> newEdges = Enumerable.Range(0,2).Select(i => new Edge(newEdgeIdStart + i, newVertexId, triangle[i])).ToList();
+		List<Edge> newEdges = Enumerable.Range(0,3).Select(i => new Edge(newEdgeIdStart + i, newVertexId, triangle[i])).ToList();
 
 		return new Graph(
 			g.vertices.Append(newVertex).ToArray(),
@@ -124,14 +132,15 @@ public class Model : MonoBehaviour
 {
 	public UnityEvent modelUpdate = new UnityEvent();
 
-	// TODO: call this behavior 'controller'. The pure model code is above	
+	// TODO: call this behavior 'controller'. The pure model code is above
 	private Graph graph;
     // Start is called before the first frame update
     void Start()
     {
-    	// TriangleSelection.addGeometryEvent.AddEventListener(addGeometry);
+    	TriangleSelection.addGeometryEvent.AddListener(AddGeometry);
+
     	// initialize Model with some dummy data (tetrahedron)
-    	this.graph = Graph.getTetrahedron();
+    	this.graph = Graph.InitTetrahedron();
     	modelUpdate.Invoke();
     }
 
@@ -139,9 +148,8 @@ public class Model : MonoBehaviour
     	return graph;
     }
 
-    public void addGeometry(int[] triangle) {
-    	this.graph = Graph.addGeometry(graph, triangle);
+    public void AddGeometry(int[] triangle) {
+    	this.graph = Graph.AddGeometry(graph, triangle);
     	modelUpdate.Invoke();
     }
-
 }

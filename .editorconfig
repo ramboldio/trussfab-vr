@@ -1,0 +1,7 @@
+# this will only format cs files that are under "MyFolder" folder (not in subfolders)
+[MyFolder/*.cs]
+formatters = uncrustify, generic
+
+# this will format cs files under "MyFolder" folder and any of its subfolders
+[MyFolder/**.cs]
+formatters = uncrustify, generic
