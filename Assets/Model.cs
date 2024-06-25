@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,12 +14,14 @@ public struct Edge
 	public readonly int id;
 	public readonly int v_src;
 	public readonly int v_dest;
+	public bool actuator;
 
-	public Edge(int id, int v_src, int v_dest)
+	public Edge(int id, int v_src, int v_dest,bool actuator)
 	{
 		this.id = id;
 		this.v_src = v_src;
 		this.v_dest = v_dest;
+		this.actuator=actuator;
 	}
 }
 
@@ -27,11 +29,12 @@ public struct Vertex
 {
 	public readonly int id;
 	public readonly Vector3 pos;
-
-	public Vertex(int id, Vector3 pos)
+	public bool inflationVertex;
+	public Vertex(int id, Vector3 pos,bool inflationVertex)
 	{
 		this.id = id;
 		this.pos = pos;
+		this.inflationVertex=inflationVertex;
 	}
 }
 
@@ -48,11 +51,11 @@ public struct Graph
 
 	public static Graph InitTetrahedron()
 	{
-		Vertex[] dinoVertecies = new Vertex[38];
-		Edge[] dinoEdges = new Edge[101];
+		Vertex[] dinoVertecies = new Vertex[7];
+		Edge[] dinoEdges = new Edge[15];
 		//reading dino indecies
 		const Int32 BufferSize = 128;
-		using (var fileStream = File.OpenRead("Assets/dino.obj"))
+		using (var fileStream = File.OpenRead("Assets/camera.obj"))
 		using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
 		{
 			String line;
@@ -65,14 +68,23 @@ public struct Graph
 				{
 
 					Vector3 vertexCoordinates = new Vector3(float.Parse(lineArr[1]), float.Parse(lineArr[2]), float.Parse(lineArr[3]));
-					dinoVertecies[vertexId] = new Vertex(vertexId++, vertexCoordinates);
+					bool inflation=false;
+					if(lineArr.Length>=5 && lineArr[4].Equals("inflation1")){
+						inflation=true;
+					}
+					dinoVertecies[vertexId] = new Vertex(vertexId++, vertexCoordinates,inflation);
 
 				}
 				if (line.StartsWith("l"))
 				{
 					int vertex1 = Int32.Parse(lineArr[1]);
 					int vertex2 = Int32.Parse(lineArr[2]);
-					dinoEdges[edgeId] = new Edge(edgeId++, vertex1-1, vertex2-1);
+					if(edgeId==7){
+					dinoEdges[edgeId] = new Edge(edgeId++, vertex1-1, vertex2-1,true);
+					}
+					else{
+						dinoEdges[edgeId] = new Edge(edgeId++, vertex1-1, vertex2-1,false);
+					}
 				}
 			}
 		}
@@ -151,10 +163,10 @@ public struct Graph
 			triangle.Select(id => g.GetPosFromVertexID(id)).Aggregate(new Vector3(), (acc, x) => acc + x) / triangle.Length;
 
 		int newVertexId = g.vertices.Length;
-		Vertex newVertex = new Vertex(newVertexId, normal * distanceFromTriangle + centroid);
+		Vertex newVertex = new Vertex(newVertexId, normal * distanceFromTriangle + centroid,false);
 
 		int newEdgeIdStart = g.edges.Length;
-		List<Edge> newEdges = Enumerable.Range(0, 3).Select(i => new Edge(newEdgeIdStart + i, newVertexId, triangle[i])).ToList();
+		List<Edge> newEdges = Enumerable.Range(0, 3).Select(i => new Edge(newEdgeIdStart + i, newVertexId, triangle[i],false)).ToList();
 
 		return new Graph(
 			g.vertices.Append(newVertex).ToArray(),
