@@ -14,7 +14,17 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/VR/Scenes/UI.unity
     guid: 1f4d3ae64a10d434db219de8b14348e1
+  - enabled: 0
+    path: Assets/Samples/XR Interaction Toolkit/2.5.4/AR Starter Assets/ARDemoScene.unity
+    guid: da4db6c21a88243878fecfe160c1be3b
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 0}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 1e7abe90f1d69e845818302ab917cccc,
+      type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 817ae1a4abc1b8048a9085c024c8c06b,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: fb5a74650a44f5a41a7863d697a60d8d,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: afb0e6b923e5530749e14e0b75ec9cd8,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: ad4ac7482a8ea82458279cb317886608,
       type: 2}

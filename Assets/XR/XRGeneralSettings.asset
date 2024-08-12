@@ -17,6 +17,23 @@ MonoBehaviour:
   m_AutomaticRunning: 0
   m_Loaders:
   - {fileID: 11400000, guid: c1de765d6c8669c859fb630340bcfa0f, type: 2}
+--- !u!114 &-2288066443723930396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Standalone Providers
+  m_EditorClassIdentifier: Unity.XR.Management:UnityEngine.XR.Management:XRManagerSettings
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 96a12afb6d8ec7b4dade4d747aa04395, type: 2}
 --- !u!114 &-609554255595073995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,6 +66,23 @@ MonoBehaviour:
   Values:
   - {fileID: 5298176509755778569}
   - {fileID: 6007543807916123794}
+--- !u!114 &1201666920611841916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
+  m_Name: Standalone Providers
+  m_EditorClassIdentifier: 
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 96a12afb6d8ec7b4dade4d747aa04395, type: 2}
 --- !u!114 &5298176509755778569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +95,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Android Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -2608098525028833425}
+  m_LoaderManagerInstance: {fileID: 9050976343783865622}
   m_InitManagerOnStart: 1
+--- !u!114 &5752549975711156527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Android Providers
+  m_EditorClassIdentifier: Unity.XR.Management:UnityEngine.XR.Management:XRManagerSettings
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 96a12afb6d8ec7b4dade4d747aa04395, type: 2}
 --- !u!114 &6007543807916123794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,5 +126,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Standalone Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -609554255595073995}
-  m_InitManagerOnStart: 0
+  m_LoaderManagerInstance: {fileID: 1201666920611841916}
+  m_InitManagerOnStart: 1
+--- !u!114 &7189217347608546964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Android Providers
+  m_EditorClassIdentifier: Unity.XR.Management:UnityEngine.XR.Management:XRManagerSettings
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 96a12afb6d8ec7b4dade4d747aa04395, type: 2}
+--- !u!114 &9050976343783865622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
+  m_Name: Android Providers
+  m_EditorClassIdentifier: 
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 96a12afb6d8ec7b4dade4d747aa04395, type: 2}
+  - {fileID: 11400000, guid: e5ac54ba56cc8fb4b9c4152e1beb7353, type: 2}
