@@ -115,7 +115,9 @@ public class View : MonoBehaviour
 
     public GameObject drawVertex(Vector3 pos)
     {
+        float diameter = (float)(tubeWidth * 2 / Math.PI);
         GameObject obj = (GameObject)Instantiate(vertexPrefab, pos, Quaternion.identity);
+        obj.transform.localScale = Vector3.one * diameter;
         obj.transform.SetParent(this.transform);
 
         return obj;
@@ -130,6 +132,9 @@ public class View : MonoBehaviour
         GameObject h2 = (GameObject)Instantiate(halfEdgePrefab, pos2, Quaternion.identity);
         h1.transform.SetParent(this.transform);
         h2.transform.SetParent(this.transform);
+
+        h1.GetComponent<HalfEdge>().other = h2.GetComponent<HalfEdge>();
+        h2.GetComponent<HalfEdge>().other = h1.GetComponent<HalfEdge>();
 
         Vector3 newScale = new Vector3();
         print("tubeWidth" + tubeWidth);
@@ -168,7 +173,12 @@ public class View : MonoBehaviour
             // h2.GetComponent<ConfigurableJoint>().autoConfigureConnectedAnchor = false;
             h1.GetComponent<ConfigurableJoint>().connectedBody = vertecies[edges[i].startId].GetComponent<Rigidbody>();
             h2.GetComponent<ConfigurableJoint>().connectedBody = vertecies[edges[i+1].endId].GetComponent<Rigidbody>();
+            
+            h1.GetComponent<HalfEdge>().endNode = vertecies[edges[i].startId].GetComponent<Rigidbody>();
+            h2.GetComponent<HalfEdge>().endNode = vertecies[edges[i+1].endId].GetComponent<Rigidbody>();
+
             var h1Joint = h1.AddComponent<ConfigurableJoint>();
+            h1.GetComponent<HalfEdge>().joint = h1Joint;
             // h1Joint.autoConfigureConnectedAnchor = false;
             h1Joint.anchor = new Vector3(0, 1, 0);
             // h1Joint.connectedAnchor = new Vector3(0, 1, 0);

@@ -58,17 +58,23 @@ public struct Graph
 		const Int32 BufferSize = 128;
 
 		Debug.Log("Loading OBJ...");
-		using (var fileStream = File.OpenRead("Assets/camera.obj"))
-		using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
+
+		string obj = Resources.Load<TextAsset>("camera").text;
+		string[] lines = obj.Split("\n");
+
+		Debug.Log(obj);
+
+		//using (var fileStream = File.OpenRead("Assets/camera.obj"))
+		//using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
 		{
-			String line;
+			//String line;
 			int vertexId = 0;
 			int edgeId=0;
 
 			CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 			ci.NumberFormat.CurrencyDecimalSeparator = ".";
 
-			while ((line = streamReader.ReadLine()) != null)
+			foreach(string line in lines)//while ((line = streamReader.ReadLine()) != null)
 			{
 				string[] lineArr = line.Split(" ");
 				if (line.StartsWith("v"))
