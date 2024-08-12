@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,19 +56,25 @@ public struct Graph
 		Edge[] dinoEdges = new Edge[15];
 		//reading dino indecies
 		const Int32 BufferSize = 128;
+
+		Debug.Log("Loading OBJ...");
 		using (var fileStream = File.OpenRead("Assets/camera.obj"))
 		using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
 		{
 			String line;
 			int vertexId = 0;
 			int edgeId=0;
+
+			CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+			ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
 			while ((line = streamReader.ReadLine()) != null)
 			{
 				string[] lineArr = line.Split(" ");
 				if (line.StartsWith("v"))
 				{
 
-					Vector3 vertexCoordinates = new Vector3(float.Parse(lineArr[1]), float.Parse(lineArr[2]), float.Parse(lineArr[3]));
+					Vector3 vertexCoordinates = new Vector3(float.Parse(lineArr[1],NumberStyles.Any,ci), float.Parse(lineArr[2],NumberStyles.Any,ci), float.Parse(lineArr[3],NumberStyles.Any,ci));
 					bool inflation=false;
 					if(lineArr.Length>=5 && lineArr[4].Equals("inflation1")){
 						inflation=true;
@@ -77,8 +84,8 @@ public struct Graph
 				}
 				if (line.StartsWith("l"))
 				{
-					int vertex1 = Int32.Parse(lineArr[1]);
-					int vertex2 = Int32.Parse(lineArr[2]);
+					int vertex1 = Int32.Parse(lineArr[1],NumberStyles.Any,ci);
+					int vertex2 = Int32.Parse(lineArr[2],NumberStyles.Any,ci);
 					if(edgeId==7){
 					dinoEdges[edgeId] = new Edge(edgeId++, vertex1-1, vertex2-1,true);
 					}
