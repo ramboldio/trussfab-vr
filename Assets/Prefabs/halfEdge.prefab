@@ -291,10 +291,34 @@ MonoBehaviour:
   _interactableView: {fileID: 8221099622152640266}
   _whenHover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 953144691838380905}
+        m_TargetAssemblyTypeName: HalfEdge, Assembly-CSharp
+        m_MethodName: EnableInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnhover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 953144691838380905}
+        m_TargetAssemblyTypeName: HalfEdge, Assembly-CSharp
+        m_MethodName: DisableInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
@@ -338,10 +362,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   other: {fileID: 0}
+  actuator: {fileID: 0}
   isActuator: 0
   actuatedMaterial: {fileID: 2100000, guid: 05962b2add373784f9349e224551fc96, type: 2}
   joint: {fileID: 0}
   endNode: {fileID: 0}
+  actuatorPrefab: {fileID: 4307376883298785695, guid: 38a458ad6eaa0ac40a0aad6d48b381cc,
+    type: 3}
 --- !u!1 &4055528626510349278
 GameObject:
   m_ObjectHideFlags: 0
