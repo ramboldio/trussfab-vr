@@ -12,6 +12,9 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Meta.XR.Audio;
 --assembly-defines=Meta.XR.BuildingBlocks;
+--assembly-defines=Meta.XR.EnvironmentDepth;
+--assembly-defines=Meta.XR.ImmersiveDebugger;
+--assembly-defines=Meta.XR.ImmersiveDebugger.Interface;
 --assembly-defines=meta.xr.mrutilitykit;
 --assembly-defines=Meta.XR.MultiplayerBlocks.Shared;
 --assembly-defines=Mono.Security;
@@ -19,6 +22,7 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=Newtonsoft.Json;
 --assembly-defines=Oculus.Interaction;
 --assembly-defines=Oculus.Interaction.OVR;
+--assembly-defines=Oculus.Interaction.Samples;
 --assembly-defines=Oculus.Platform;
 --assembly-defines=Oculus.VR;
 --assembly-defines=System.Configuration;
@@ -27,6 +31,7 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=System;
 --assembly-defines=System.Numerics;
 --assembly-defines=System.Runtime.Serialization;
+--assembly-defines=System.ServiceModel.Internals;
 --assembly-defines=System.Xml;
 --assembly-defines=System.Xml.Linq;
 --assembly-defines=Unity.AI.Navigation;
@@ -76,6 +81,9 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Meta.XR.Audio;
 --assembly-defines=Meta.XR.BuildingBlocks;
+--assembly-defines=Meta.XR.EnvironmentDepth;
+--assembly-defines=Meta.XR.ImmersiveDebugger;
+--assembly-defines=Meta.XR.ImmersiveDebugger.Interface;
 --assembly-defines=meta.xr.mrutilitykit;
 --assembly-defines=Meta.XR.MultiplayerBlocks.Shared;
 --assembly-defines=Mono.Security;
@@ -83,6 +91,7 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=Newtonsoft.Json;
 --assembly-defines=Oculus.Interaction;
 --assembly-defines=Oculus.Interaction.OVR;
+--assembly-defines=Oculus.Interaction.Samples;
 --assembly-defines=Oculus.Platform;
 --assembly-defines=Oculus.VR;
 --assembly-defines=System.Configuration;
@@ -91,6 +100,7 @@ Library: F:\HCI seminar 2\trussfab-vr\Temp\BurstOutput\tempburstlibs\arm64-v8a\l
 --assembly-defines=System;
 --assembly-defines=System.Numerics;
 --assembly-defines=System.Runtime.Serialization;
+--assembly-defines=System.ServiceModel.Internals;
 --assembly-defines=System.Xml;
 --assembly-defines=System.Xml.Linq;
 --assembly-defines=Unity.AI.Navigation;
