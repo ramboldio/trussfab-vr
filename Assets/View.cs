@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class View : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class View : MonoBehaviour
     public GameObject vertexPrefab;
     public GameObject edgePrefab;
     private Dictionary<int, GameObject> vertecies = new Dictionary<int, GameObject>();
-    private List<edgeStartEnd> edges = new List<edgeStartEnd>();
+    public List<edgeStartEnd> edges = new List<edgeStartEnd>();
+
+    public UnityEvent edgesDrawn = new UnityEvent();
 
 
     public class edgeStartEnd
@@ -30,6 +33,10 @@ public class View : MonoBehaviour
         model = model_GO.GetComponent<Model>();
         model.modelUpdate.AddListener(updateTrussStructure);
     }
+    void Update()
+    {
+        Debug.Log("Dino location: " + transform.localPosition);
+    }
     public Dictionary<int, GameObject> GetVertices()
     {
         return vertecies;
@@ -46,23 +53,27 @@ public class View : MonoBehaviour
             edges.Add(new edgeStartEnd(graph.vertices[graph.edges[i].v_src].id, graph.vertices[graph.edges[i].v_dest].id, edge));
         }
 
-        for (int i = 0; i < graph.vertices.Length; i++)
-        {
+        // for (int i = 0; i < graph.vertices.Length; i++)
+        // {
 
-            var vertex = drawVertex(graph.vertices[i].pos);
-            vertecies.Add(graph.vertices[i].id, vertex);
-        }
+        //     var vertex = drawVertex(graph.vertices[i].pos);
+        //     vertecies.Add(graph.vertices[i].id, vertex);
+        // }
+        edgesDrawn.Invoke();
+        // transform.position = cameraTransform.position + cameraTransform.forward * 2;
+        
     }
 
-    public GameObject drawVertex(Vector3 pos)
-    {
-        Debug.Log($"🟢 Instantiating vertex at {pos}");
-        GameObject obj = (GameObject)Instantiate(vertexPrefab, pos, Quaternion.identity);
-        Debug.Log($"Finished Instantiating vertex at {pos}");
-        obj.transform.SetParent(this.transform);
-        obj.SetActive(false);
-        return obj;
-    }
+    // public GameObject drawVertex(Vector3 pos)
+    // {
+    //     GameObject obj = (GameObject)Instantiate(vertexPrefab, pos, Quaternion.identity);
+    //     obj.transform.SetParent(this.transform);
+
+    //     // obj.SetActive(false);
+    //     Debug.Log("Vertex world pos:" + obj.transform.position);
+    //     Debug.Log("Vertex local pos:" + obj.transform.localPosition);
+    //     return obj;
+    // }
 
     public GameObject drawTruss(Vector3 p1, Vector3 p2)
     {
@@ -74,7 +85,9 @@ public class View : MonoBehaviour
         newScale.y = Vector3.Distance(p1, p2) / 2;
         obj.transform.localScale = newScale;
         obj.transform.localRotation = Quaternion.FromToRotation(Vector3.up, p1 - p2);
-        obj.SetActive(false);
+        // obj.SetActive(false);
+        obj.GetComponent<MeshRenderer>().enabled = false;
+
         return obj;
     }
 

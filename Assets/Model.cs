@@ -47,17 +47,17 @@ public struct Graph
 
     // Embedded dino.obj content as a verbatim string
     private static readonly string dinoObjContent = @"
-v 2.405123 6.187879 -0.567431
-v 4.467745 6.065675 -0.444829
-v 7.023954 7.614221 -0.296009
-v 7.065202 6.911689 -0.320699
-v 5.144553 6.485277 0.401834
-v 5.168724 6.578892 -1.204038
-v 6.659563 5.194789 -0.393004
-v 4.228254 7.457746 -0.893511
-v 4.280571 7.396937 0.214404
-v 3.619620 5.227151 0.198013
-v 3.592076 5.272702 -1.062384
+v 0.000000 6.187879 0.636607
+v 2.062622 6.065675 0.759209
+v 4.618831 7.614221 0.908029
+v 4.660079 6.911689 0.883339
+v 2.739430 6.485277 1.605872
+v 2.763601 6.578892 0.000000
+v 4.254440 5.194789 0.811034
+v 1.823131 7.457746 0.310527
+v 1.875448 7.396937 1.418442
+v 1.214497 5.227151 1.402051
+v 1.186953 5.272702 0.141654
 l 4 5
 l 4 6
 l 5 6
@@ -82,6 +82,7 @@ l 11 8
 l 1 9
 l 9 10
 l 2 7
+
 ";
 
     public static Graph InitFromString()
@@ -202,7 +203,7 @@ public class Model : MonoBehaviour
     void Start()
     {
         TriangleSelection.addGeometryEvent.AddListener(AddGeometry);
-        Debug.Log("Dino view component: " + GameObject.Find("Dino").GetComponent<View>());
+        // Debug.Log("Dino view component: " + GameObject.Find("Dino").GetComponent<View>());
         
         // Initialize graph by parsing the embedded OBJ string
         this.graph = Graph.InitFromString();
